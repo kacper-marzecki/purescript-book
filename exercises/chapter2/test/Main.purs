@@ -2,7 +2,7 @@ module Test.Main where
 
 import Prelude
 import Test.MySolutions
-import Test.NoPeeking.Solutions  -- Note to reader: Delete this line
+-- import Test.NoPeeking.Solutions  -- Note to reader: Delete this line
 import Effect (Effect)
 import Euler (answer)
 import Test.Unit (suite, test)
