@@ -3,12 +3,14 @@ module Test.MySolutions where
 import Prelude
 
 import Data.AddressBook (Entry, AddressBook)
-import Data.List (List(..), any, find, foldl, reverse)
+import Data.List (List(..), any, find, foldl, nubBy, reverse)
+import Data.List.Lazy as List
 import Data.Maybe (Maybe)
 import Data.Set (Set, insert, member)
 import Data.Set as Set
 import Data.Tuple (Tuple(..), snd)
 import Data.Tuple.Nested ((/\))
+import Prim.Ordering (EQ, LT)
 
 -- Note to reader: Add your solutions to this file
 
@@ -38,3 +40,13 @@ removeDuplicates book = reverse $ snd $ foldl op initialAcc  book
         where 
             currentKey = (key entry)
     key e = Tuple e.firstName e.lastName
+
+-- alternative solution 
+removeDuplicates' :: AddressBook -> AddressBook
+removeDuplicates' book = nubBy ordering book
+    where 
+        ordering a b = 
+            if a.firstName == b.firstName && a.lastName == b.lastName 
+                then EQ
+                -- using Ordering instead of Eq because of the complexity (`O(n log n)` vs `O(n ^2)`) 
+                else LT 
